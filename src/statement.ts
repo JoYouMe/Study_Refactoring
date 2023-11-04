@@ -1,7 +1,7 @@
 import { I_INVOICES } from "./interfaces/invoice";
 import { I_PLAYS } from "./interfaces/plays";
 
-function statement(invoice: I_INVOICES, plays: I_PLAYS): string {
+export function Statement(invoice: I_INVOICES, plays: I_PLAYS): string {
     let totalAmount: number = 0;
     let volumeCredits: number = 0;
     let result: string = `청구 내역 (고객명: ${invoice.customer})\n`;
