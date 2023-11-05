@@ -7,7 +7,7 @@ export function Statement(invoice: I_INVOICES, plays: I_PLAYS): string {
     let result: string = `청구 내역 (고객명: ${invoice.customer})\n`;
     const format = new Intl.NumberFormat("es-US", { style: "currency", currency: "USD", minimumFractionDigits: 2 }).format;
 
-    function amountFor(aPerformance:I_PERFORMANCE, play:I_PLAY) {
+    function amountFor(aPerformance:I_PERFORMANCE) {
         let result = 0;
     
             switch (playFor(aPerformance).type) {
@@ -35,7 +35,7 @@ export function Statement(invoice: I_INVOICES, plays: I_PLAYS): string {
     }
 
     for (let perf of invoice.performances) {
-        let thisAmount = amountFor(perf, playFor(perf)) // switch 
+        let thisAmount = amountFor(perf) // switch 
 
         //포인트를 적립한다.
         volumeCredits += Math.max(perf.audience - 30, 0);
