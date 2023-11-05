@@ -3,7 +3,6 @@ import {I_PLAYS } from "./interfaces/plays";
 
 export function Statement(invoice: I_INVOICES, plays: I_PLAYS): string {
     let totalAmount: number = 0;
-    let volumeCredits:number = 0;
     let result: string = `청구 내역 (고객명: ${invoice.customer})\n`;
 
     // 공연 요금 계산
@@ -48,15 +47,21 @@ export function Statement(invoice: I_INVOICES, plays: I_PLAYS): string {
         return new Intl.NumberFormat("es-US", { style: "currency", currency: "USD", minimumFractionDigits: 2 }).format(aNumber/100)
     }
 
-    for (let perf of invoice.performances) {
+    // 총 적립 포인트 계산
+    function totalVolumeCredits() {
+        let volumeCredits:number = 0;
+    for(let perf of invoice.performances) {
+        volumeCredits += volumeCreditsFor(perf)
+    }
+    return volumeCredits;
+    }
 
+    for (let perf of invoice.performances) {
         //청구 내역을 출력한다.
         result += `  ${playFor(perf).name} : ${usd(amountFor(perf))} (${perf.audience}석)\n`;
         totalAmount += amountFor(perf);
     }
-    for(let perf of invoice.performances) {
-        volumeCredits += volumeCreditsFor(perf)
-    }
+    let volumeCredits = totalVolumeCredits()
     result += `총액 : ${usd(totalAmount)}\n`;
     result += `적립 포인트 : ${volumeCredits}점\n`;
     return result;
