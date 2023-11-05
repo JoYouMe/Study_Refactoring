@@ -10,7 +10,7 @@ export function Statement(invoice: I_INVOICES, plays: I_PLAYS): string {
         let result = 0;
     
             switch (playFor(aPerformance).type) {
-                case "tragedy": // 비극
+                case "tragedy": // 비극  
                 result = 40000;
                     if (aPerformance.audience > 30) {
                         result += 1000 * (aPerformance.audience - 30);
