@@ -1,5 +1,5 @@
 import { amountFor } from "./amountFor";
-import { I_INVOICES } from "./interfaces/invoice";
+import { I_INVOICES, I_PERFORMANCE } from "./interfaces/invoice";
 import { I_PLAYS } from "./interfaces/plays";
 
 export function Statement(invoice: I_INVOICES, plays: I_PLAYS): string {
@@ -8,10 +8,13 @@ export function Statement(invoice: I_INVOICES, plays: I_PLAYS): string {
     let result: string = `청구 내역 (고객명: ${invoice.customer})\n`;
     const format = new Intl.NumberFormat("es-US", { style: "currency", currency: "USD", minimumFractionDigits: 2 }).format;
 
+    function playFor(aPerformance:I_PERFORMANCE){
+        return plays[aPerformance.playID]
+    }
 
     for (let perf of invoice.performances) {
-        const play = plays[perf.playID];
-        let thisAmount = amountFor(perf, play) // switch 함수로 추출
+        const play = playFor(perf)
+        let thisAmount = amountFor(perf, play) // switch 
 
         //포인트를 적립한다.
         volumeCredits += Math.max(perf.audience - 30, 0);
@@ -25,3 +28,4 @@ export function Statement(invoice: I_INVOICES, plays: I_PLAYS): string {
     result += `적립 포인트 : ${volumeCredits}점\n`;
     return result;
 }
+
