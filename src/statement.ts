@@ -5,7 +5,6 @@ export function Statement(invoice: I_INVOICES, plays: I_PLAYS): string {
     let totalAmount: number = 0;
     let volumeCredits:number = 0;
     let result: string = `청구 내역 (고객명: ${invoice.customer})\n`;
-    const format = new Intl.NumberFormat("es-US", { style: "currency", currency: "USD", minimumFractionDigits: 2 }).format;
 
     function amountFor(aPerformance:I_PERFORMANCE) {
         let result = 0;
@@ -42,14 +41,18 @@ export function Statement(invoice: I_INVOICES, plays: I_PLAYS): string {
         return result
     }
 
+    function usd(aNumber: number) {
+        return new Intl.NumberFormat("es-US", { style: "currency", currency: "USD", minimumFractionDigits: 2 }).format(aNumber/100)
+    }
+
     for (let perf of invoice.performances) {
         volumeCredits += volumeCreditsFor(perf)
 
         //청구 내역을 출력한다.
-        result += `  ${playFor(perf).name} : ${format(amountFor(perf) / 100)} (${perf.audience}석)\n`;
+        result += `  ${playFor(perf).name} : ${usd(amountFor(perf) / 100)} (${perf.audience}석)\n`;
         totalAmount += amountFor(perf);
     }
-    result += `총액 : ${format(totalAmount / 100)}\n`;
+    result += `총액 : ${usd(totalAmount / 100)}\n`;
     result += `적립 포인트 : ${volumeCredits}점\n`;
     return result;
 }
