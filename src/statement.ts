@@ -6,6 +6,7 @@ export function Statement(invoice: I_INVOICES, plays: I_PLAYS): string {
     let volumeCredits:number = 0;
     let result: string = `청구 내역 (고객명: ${invoice.customer})\n`;
 
+    // 공연 요금 계산
     function amountFor(aPerformance:I_PERFORMANCE) {
         let result = 0;
     
@@ -29,28 +30,32 @@ export function Statement(invoice: I_INVOICES, plays: I_PLAYS): string {
         return result
     }
 
+    // 공연 데이터
     function playFor(aPerformance:I_PERFORMANCE) {
         return plays[aPerformance.playID]
     }
 
+    // 적립 포인트 계산
     function volumeCreditsFor(aPerformance:I_PERFORMANCE) {
         let result: number = 0;
-        //포인트를 적립한다.
         result += Math.max(aPerformance.audience - 30, 0);
         if (playFor(aPerformance).type === "comedy") result += Math.floor(aPerformance.audience / 5);
         return result
     }
 
+    // 화폐 단위
     function usd(aNumber: number) {
         return new Intl.NumberFormat("es-US", { style: "currency", currency: "USD", minimumFractionDigits: 2 }).format(aNumber/100)
     }
 
     for (let perf of invoice.performances) {
-        volumeCredits += volumeCreditsFor(perf)
 
         //청구 내역을 출력한다.
         result += `  ${playFor(perf).name} : ${usd(amountFor(perf))} (${perf.audience}석)\n`;
         totalAmount += amountFor(perf);
+    }
+    for(let perf of invoice.performances) {
+        volumeCredits += volumeCreditsFor(perf)
     }
     result += `총액 : ${usd(totalAmount)}\n`;
     result += `적립 포인트 : ${volumeCredits}점\n`;
