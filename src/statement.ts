@@ -13,15 +13,14 @@ export function Statement(invoice: I_INVOICES, plays: I_PLAYS): string {
     }
 
     for (let perf of invoice.performances) {
-        const play = playFor(perf)
-        let thisAmount = amountFor(perf, play) // switch 
+        let thisAmount = amountFor(perf, playFor(perf)) // switch 
 
         //포인트를 적립한다.
         volumeCredits += Math.max(perf.audience - 30, 0);
-        if (play.type === "comedy") volumeCredits += Math.floor(perf.audience / 5);
+        if (playFor(perf).type === "comedy") volumeCredits += Math.floor(perf.audience / 5);
 
         //청구 내역을 출력한다.
-        result += `  ${play.name} : ${format(thisAmount / 100)} (${perf.audience}석)\n`;
+        result += `  ${playFor(perf).name} : ${format(thisAmount / 100)} (${perf.audience}석)\n`;
         totalAmount += thisAmount;
     }
     result += `총액 : ${format(totalAmount / 100)}\n`;
