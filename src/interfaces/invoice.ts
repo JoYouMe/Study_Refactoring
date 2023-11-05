@@ -3,7 +3,7 @@ export interface I_INVOICES {
     customer: string;
 }
 
-interface I_PERFORMANCE { 
+export interface I_PERFORMANCE { 
     playID: string;
     audience: number;
 }
