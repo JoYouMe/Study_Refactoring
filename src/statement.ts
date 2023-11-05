@@ -49,10 +49,10 @@ export function Statement(invoice: I_INVOICES, plays: I_PLAYS): string {
         volumeCredits += volumeCreditsFor(perf)
 
         //청구 내역을 출력한다.
-        result += `  ${playFor(perf).name} : ${usd(amountFor(perf) / 100)} (${perf.audience}석)\n`;
+        result += `  ${playFor(perf).name} : ${usd(amountFor(perf))} (${perf.audience}석)\n`;
         totalAmount += amountFor(perf);
     }
-    result += `총액 : ${usd(totalAmount / 100)}\n`;
+    result += `총액 : ${usd(totalAmount)}\n`;
     result += `적립 포인트 : ${volumeCredits}점\n`;
     return result;
 }
