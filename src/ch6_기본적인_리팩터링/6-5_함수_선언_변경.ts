@@ -1,17 +1,21 @@
 /**
- *  2. addReservation()의 본문을 새로운 함수로 추출한다.
- * 새로 추출한 함수 이름도 addReservation()이어야 하지만,
- * 기존 함수와 이름이 같은 상태로 둘 수는 없으니 우선은 
- * 나중에 찾기 쉬운 임시 이름을 붙인다.
+ *  3. 다음 새 함수의 선언문과 호출문에 원하는 매개변수를 추가한다.
+ * 
+ * 호출하는 곳에서 새로 추가한 매개변수를 실제로 사용하는지 확인한다.
+ * 호출문을 수정하는 과정에서 실수로 새 매개변수를 빠뜨린 부분을 찾는데 도움이 된다.
  */
 
 class Book {
-  _reservations: any;
-  addReservation(customer:any){
-    this.zz_reservations(customer)
+  private _reservations: any[] = [];
+
+  addReservation(customer: any) {
+    this.zzReservations(customer, false);
   }
 
-  zz_reservations(customer:any){
-    this._reservations.push(customer)
+  zzReservations(customer: any, isPriority: boolean) {
+    if (!(isPriority === true || isPriority === false)) {
+      throw new Error('isPriority should be a boolean value');
+    }
+    this._reservations.push(customer);
   }
 }
