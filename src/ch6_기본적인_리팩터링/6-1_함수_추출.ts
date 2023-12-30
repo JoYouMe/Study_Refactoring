@@ -1,16 +1,12 @@
-// 2. 추출할 부분을 새로운 함수로 복사한다. 
+// 4. 내 자바스크립트 환경은 컴파일해도 아무런 값을 출력하지 않는다. 따라서 이 단계에서는 더 이상 할 일이 없다.
+// 5. 다음으로 넘어가, 추출한 코드의 원래 자리를 새로 뽑아낸 함수를 호출하는 문장으로 교체한다.
+// 추출한 함수에서 새 값을 반환하니, 이 값을 원래 변수에 저장한다.
 
 function printOwing(invoice:any) {
     printBanner();
-  
-    // 미해결 채무 (outstanding)를 계산한다.
-    for (const o of invoice.orders) {
-      let outstanding = 0; // 맨 위에 있던 선언문을 이 위치로 이동
-      outstanding += o.amount;
-    }
-  
-    recordDueDate(invoice);
-    printDetails(invoice, outstanding);
+    let outstanding = calculateOutstanding(invoice) // 함수 추출 완료. 추출한 함수가 반환한 값을 원래 변수에 저장한다.
+    recordDueDate(invoice)
+    printDetails(invoice, outstanding)
   }
   
   function calculateOutstanding(invoice:any) {
@@ -18,7 +14,5 @@ function printOwing(invoice:any) {
     for(const o of invoice.orders) {
       outstanding += o.amount;
     }
-  // 3. outstanding의 선언문을 추출할 코드 앞으로 옮겼기 때문에 매개변수로 전달하지 않아도 된다.
-  // 추출한 코드에서 값이 변경된 변수는 outstanding뿐이다. 따라서 이 값을 반환한다.
     return outstanding; // 수정된 값 반환
   }
