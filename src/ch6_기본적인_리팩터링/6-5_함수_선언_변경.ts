@@ -1,8 +1,11 @@
-// 2. 먼저 함수 선언부터 수정하자.
+/**
+ * 매개변수 추가하기
+ * 
+ */
 
-function cirumference(radius:any){
-    return 2 * Math.PI * radius;
+class Book {
+  _reservations: any;
+  addReservation(customer:any){
+    this._reservations.push(customer)
   }
-  
-  // 3. 다음으로 cirum()을 호출한 곳을 모두 찾아서 cirumference()로 바꾼다.
-  
+}
