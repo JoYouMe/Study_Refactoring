@@ -1,36 +1,16 @@
+// 1. 선언문을 변수가 사용되는 코드 근처로 슬라이드 한다.
+
 function printOwing(invoice:any) {
-    let outstanding = 0;
   
     printBanner(); 
-  
+    
     // 미해결 채무 (outstanding)를 계산한다.
     for (const o of invoice.orders) {
+      let outstanding = 0; // 맨 위에 있던 선언문을 이 위치로 이동
       outstanding += o.amount;
     }
   
-    recordDueDate(invoice) // 마감일 설정 로직을 함수로 추출
-    printDetails(invoice, outstanding); // 앞의 예와 달리 지역 변수를 매개변수로 전달
-    
-  }
+    recordDueDate(invoice) 
+    printDetails(invoice, outstanding); 
   
-  function printBanner() {
-    console.log("***********************");
-    console.log("****** 고객 채무 ******");
-    console.log("***********************");
-  }
-  
-  function recordDueDate(invoice:any){
-      // 마감일 (dueDate)을 기록한다.
-      const today = Clock.today;
-      invoice.dueDate = new Date(
-        today.getFullYear(),
-        today.getMonth(),
-        today.getDate() + 30
-      );
-  }
-  
-  function printDetails() {
-    console.log(`고객명: ${invoice.customer}`);
-    console.log(`채무액: ${outstanding}`);
-    console.log(`마감일: ${invoice.dueDate.toLocaleDateString()}`);
   }
