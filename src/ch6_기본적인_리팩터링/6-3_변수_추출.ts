@@ -1,7 +1,8 @@
-// 1. 기본 가격은 상품 가격(itemPrice)에 수량 (quantity)을 곱한 값임을 파악해내야 한다.
+// 2. 이 로직을 이해했다면 기본 가격을 담을 변수를 만들고 적절한 이름을 지어준다.
 
 function price(order:any) {
     // 가격 (price) = 기본 가격 - 수량 할인 + 배송비
+    const basePrice = order.quantity * order.itemPrice;
     return (
       order.quantity * order.itemPrice -
       Math.max(0, order.quantity - 500) * order.itemPrice * 0.05 +
