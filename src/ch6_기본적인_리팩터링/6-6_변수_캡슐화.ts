@@ -1,8 +1,8 @@
 /** 값 캡슐화하기
- * 기본 캡슐화 기법은 데이터 항목을 참조하는 부분만 캡슐화한다.
- * 대부분은 이 정도로 충분하지만, 변수뿐 아니라 변수에 담긴 내용을 변경하는 행위까지
- * 제어할 수 있게 캡슐화하고 싶을 때도 많다.
- * 나는 주로 게터가 데이터의 복제본을 반환하도록 수정하는 식으로 처리한다.
+ * 데이터의 복제복은 반환하면 클라이언트는 게터로 얻은 데이터를 변경할 수 있지만 원본에는 아무 영향을 주지 못한다.
+ * 단, 주의할 점이 있다. 공유 데이터 (원본)를 변경하기를 원하는 클라이언트가 있을 수 있다.
+ * 이럴 때 나는 문제가 될만한 부분을 테스트로 찾는다. 아니면 아예 변경할 수 없게 만들 수도 있다.
+ * 이를 위한 좋은 방법이 레코드 캡슐화하기다.
  */
 
 let defaultOwnerData = { firstName: '마틴', lastName: '파울러'};
@@ -12,6 +12,17 @@ export function getDefaultOwner(){
 }
 
 export function setDefaultOwner(arg:any){defaultOwnerData = arg}
+
+class Person {
+    constructor(data) {
+        this._lastName = data.lastName;
+        this._firstName = data.firstName
+    }
+
+    get lastName() {return this._lastName;}
+    get firstName() {return this._firstName;}
+    // 다른 속성도 이런 식으로 처리한다.
+}
 
 
 
