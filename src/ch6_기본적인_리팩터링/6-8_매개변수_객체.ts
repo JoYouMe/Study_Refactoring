@@ -1,12 +1,9 @@
 /**
- * 1. 묶은 데이터를 표현하는 클래스부터 선언하자.
+ * 3. 새로 만든 객체를 readingOutsideRange()의 매개변수로 추가하도록 함수 선언을 바꾼다.
  */
 
-class NumberRange {
-    private _data: any;
-    constructor(min:any, max:any){
-        this._data = {min:min, max:max}
-    }
-    get min(){return this._data.min;}
-    get max(){return this._data.max}
+function readingOutsideRange(station:any, min:any, max:any, range:any){
+    return station.readings.filter(r => r.temp < min || r.temp > max)
 }
+
+alerts = readingOutsideRange(station, operatingPlan.temperatureFloor,operatingPlan.temperatureCeiling, null)
