@@ -1,3 +1,6 @@
+/**
+ * 1. 먼저 레코드를 클래스로 변환하기 위해 레코드를 캡슐화한다.
+ */
 class Reading {
     base(){}
     taxableCharge(){}
