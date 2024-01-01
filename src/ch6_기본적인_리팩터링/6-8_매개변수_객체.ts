@@ -1,5 +1,5 @@
 /**
- * 5. 이제 온도 범위를 객체 형태로 전달하도록 호출문을 하나씩 바꾼다.
+ * 6. 이제 기존 매개변수를 사용하는 부분을 변경한다. 
  */
 
 class NumberRange {
@@ -14,10 +14,9 @@ class NumberRange {
 let operatingPlan:any;
 let station:any;
 
-function readingOutsideRange(station:any, min:any, max:any, range:any){
-    return station.readings.filter(r => r.temp < min || r.temp > max)
+function readingOutsideRange(station:any, range:any){
+    return station.readings.filter(r => r.temp < range.min || r.temp > range.max)
 }
-
-alerts = readingOutsideRange(station, operatingPlan.temperatureFloor,operatingPlan.temperatureCeiling, null)
-
 const range = new NumberRange(operatingPlan.temperatureFloor,operatingPlan.temperatureCeiling)
+
+let alerts = readingOutsideRange(station, range)
