@@ -1,22 +1,10 @@
-let reading = {customer: 'ivan', quantity: 10, month: 5, year: 2024}
+/**
+ * 1. 우선 입력 객체를 그대로 복사해 반환하는 변환 함수로 만든다.
+ * 
+ * 깊은 복사는 lodash 라이브러리가 제공하는 cloneDeep()로 처리했다.
+ */
 
-// client 1
-const _aReading = acquireReading();
-const _baseCharge = baseRate(aReading.month, aReading.year) * aReading.quantity;
-
-// client 2
-const aReading_2 = acquireReading();
-const base = baseRate(aReading.month, aReading.year) * aReading.quantity;
-const _taxableCharge = Math.max(0, base - Number(taxThreshold(aReading_2.year)))
-
-// client 3
-const aReading_3 = acquireReading();
-const basicChargeAmount = calculateBaseCharge(aReading_3)
-
-function calculateBaseCharge(aReading: any){ // 다른 곳에서 이미 함수로 만들어둠
-    return baseRate(aReading.month, aReading.year) * aReading.quantity
+function enrichReading(original: any){
+    const resutl = _.cloneDeep(origin);
+    return resutl;
 }
-
-function acquireReading (){}
-function baseRate (month:any, year:any):any{}
-function taxThreshold (year:any):any{}
