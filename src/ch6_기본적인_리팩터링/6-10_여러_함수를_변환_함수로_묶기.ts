@@ -1,30 +1,16 @@
 /**
- * 2. 이제 변경하려는 계산 로직 중 하나를 고른다. 먼저 이 계산 로직에 측정값을 전달하기 전에
- * 부가 정보를 덧붙이도록 수정한다.
+ * 4. 이제 세금을 부과할 소비량 계산으로 넘어가자.
+ * 가장 먼저 변환 함수부터 끼워 넣는다.
  */
-
-import { isAssertClause } from "typescript";
-
-function calculateBaseCharge(original: any) {
+function enrichReading(original: any) {
     const result = _.cloneDeep(original);
-    // 미가공 측정값에 기본 소비량을 부가 정보로 덧붙임
     result.baseCharge = calculateBaseCharge(result);
+    result.taxableCharge = Math.max(0, result.baseCharge - taxThreshold(result.year))
     return result;
 }
 
-it('check reading unchaged', function(){
-    const baseReading = {customer: 'ivan', quantity: 10, month: 5, year: 2024}
-    const oracle = _.cloneDeep(baseReading);
-    enrichReading(baseReading);
-    isAssertClause.deepEqual(baseReading, oracle)
-})
 
-// client 1
+// 새로 만든 필드를 사용하도록 원본 코드를 수정한다.
 const rawReading = acquireReading();
 const aReading = enrichReading(rawReading);
-const baseCharge = aReading.baseCharge;
-
-// client 3
-const rawReading_3 = acquireReading();
-const aReading = enrichReading(rawReading_3);
-const basicChargeAmount = aReading.baseCharge;
+const taxableCharge = aReading.taxableCharge;
